@@ -1,0 +1,3 @@
+C:/Users/User/Project/Garbage-Collector/build/CMakeFiles/main.dir
+C:/Users/User/Project/Garbage-Collector/build/CMakeFiles/edit_cache.dir
+C:/Users/User/Project/Garbage-Collector/build/CMakeFiles/rebuild_cache.dir
