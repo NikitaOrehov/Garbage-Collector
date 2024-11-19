@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include "Vector.h"
 #include "Allocator.h"
 #include <iostream>
 
@@ -16,8 +16,8 @@ private:
 public:
     static Garbage_Collector Collector;
     static int count;
-    static std::vector<Object> _AllObject;
-    static Allocator _Allocator;
+    static Vector<Object> _AllObject;
+    // static Allocator _Allocator;
     static void AddElement(void* reference){
         Object o;
         o.IsAlive = 0;
@@ -26,9 +26,15 @@ public:
     }
     
     static void DeleteElement(void* referense){
-        for (auto i = _AllObject.begin(); i != _AllObject.end(); i++){
-            if (i->Referense == referense){
-                _AllObject.erase(i);
+        // for (auto i = _AllObject.begin(); i != _AllObject.end(); i++){
+        //     if (i->Referense == referense){
+        //         _AllObject.erase(i);
+        //         return;
+        //     }
+        // }
+        for (int i = 0; i < _AllObject.size(); i++){
+            if (_AllObject[i].Referense == referense){
+                _AllObject.DeleteElem(i);
                 return;
             }
         }
@@ -50,20 +56,20 @@ public:
     }
 };
 
-// void* operator new(size_t size){
-//     std::cout<<"operator new "<<size<<"\n";
-//     void* referense = malloc(size);
-//     if (!referense){
-//         throw std::bad_alloc();
-//     }
-//     Garbage_Collector::AddElement(referense);
-//     return referense;
-// }
+void* operator new(size_t size){
+    std::cout<<"operator new "<<size<<"\n";
+    void* referense = malloc(size);
+    if (!referense){
+        throw std::bad_alloc();
+    }
+    Garbage_Collector::AddElement(referense);
+    return referense;
+}
 
-// void operator delete(void* referense){
-//     std::cout<<"operator delete\n";
-//     Garbage_Collector::DeleteElement(referense);
-// }
+void operator delete(void* referense){
+    std::cout<<"operator delete\n";
+    Garbage_Collector::DeleteElement(referense);
+}
 
 void* operator new[](size_t size){
     std::cout<<"operator new[] :"<<size<<"\n";
