@@ -1,57 +1,48 @@
 #pragma once
 #include "Vector.h"
-#include "Allocator.h"
 #include <iostream>
-
-struct Object
-{
-    void* Referense;
-    bool IsAlive = 0;
-};
 
 class Garbage_Collector{
 private:
     void Mark();
     void Sweep();
+    Vector<Object> _AllObject;
 public:
     static Garbage_Collector Collector;
-    static int count;
-    static Vector<Object> _AllObject;
-    // static Allocator _Allocator;
     static void AddElement(void* reference){
         Object o;
         o.IsAlive = 0;
         o.Referense = reference;
         Collector._AllObject.push_back(o);
+        if (Collector._AllObject.size() % 100 == 0){
+            Collector.GC();
+        }
     }
     
     static void DeleteElement(void* referense){
-        // for (auto i = _AllObject.begin(); i != _AllObject.end(); i++){
-        //     if (i->Referense == referense){
-        //         _AllObject.erase(i);
-        //         return;
-        //     }
-        // }
-        for (int i = 0; i < _AllObject.size(); i++){
-            if (_AllObject[i].Referense == referense){
-                _AllObject.DeleteElem(i);
+        for (int i = 0; i < Collector._AllObject.size(); i++){
+            if (Collector._AllObject[i].Referense == referense){
+                Collector._AllObject.DeleteElem(i);
                 return;
             }
         }
-        std::cerr << "Warning: Attempt to unregister unregistered pointer: " << referense << std::endl;
+        std::cout<<"error1\n";
     }
 
     Garbage_Collector(){
         std::cout<<"constructor Collector\n";
     }
 
-    void GC(){
-
+    static void GC(){
+        Collector._AllObject.DeleteGarbage();
     }
 
     static void PrintAll(){
+        if (Collector._AllObject.size() == 0){
+            std::cout<<"Vector empty\n";
+        }
         for (int i = 0; i < Collector._AllObject.size(); i++){
-            std::cout<<_AllObject[i].Referense<<"\n";
+            std::cout<<Collector._AllObject[i].Referense<<"\n";
         }
     }
 };
