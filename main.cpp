@@ -2,19 +2,42 @@
 #include <iostream>
 #include "Garbage_collector.h"
 
-Garbage_Collector Garbage_Collector::Collector;
+// void* operator new(size_t size){
+//     void *object = malloc(size);
 
-int main(){
-    int* a = new int;
-    *a = 3;
-    delete a;
-    std::cout<<"a: "<<*a<<"\n";
-    int* b = new int[10];
-    Garbage_Collector::PrintAll();
-    b[0] = -3;
-    b[1] = -4;
-    delete [] b;
-    b[1] = -2;
-    std::cout<<"b= "<<b<<"\n";
-    Garbage_Collector::PrintAll();
+//     auto header = new ObjectHeader{.marked = false, .size = size};
+//     traceInfo.insert(std::make_pair((Traceable *)object, header));
+
+//     return object;
+// }
+
+class B: public Traceable{
+public:
+    int* _a;
+    B(){
+        _a = new int[15];
+    }
+};
+
+class A: public Traceable{
+public:
+    B* _bb;
+    A(){
+        _bb = new B;
+    }
+};
+
+int main(int argc, char const *argv[]) {
+    gcInit();
+    A* _aaaa = new A;
+    _aaaa->_bb = nullptr;
+    // auto A = createGraph();
+
+    dump("Allocated graph:");
+
+    // A->right = nullptr;
+
+    gc();
+    _aaaa->_bb = new B;
+    return 0;
 }

@@ -1,82 +1,160 @@
-#pragma once
-#include "Vector.h"
 #include <iostream>
+#include <memory>
+#include <map>
+#include <vector>
+#include <setjmp.h>
 
-class Garbage_Collector{
-private:
-    void Mark();
-    void Sweep();
-    Vector<Object> _AllObject;
-public:
-    static Garbage_Collector Collector;
-    static void AddElement(void* reference){
-        Object o;
-        o.IsAlive = 0;
-        o.Referense = reference;
-        Collector._AllObject.push_back(o);
-        if (Collector._AllObject.size() % 100 == 0){
-            Collector.GC();
-        }
-    }
-    
-    static void DeleteElement(void* referense){
-        for (int i = 0; i < Collector._AllObject.size(); i++){
-            if (Collector._AllObject[i].Referense == referense){
-                Collector._AllObject.DeleteElem(i);
-                return;
-            }
-        }
-        std::cout<<"error1\n";
-    }
+template <typename... T>
+void print(const T &... t) {
+  (void)std::initializer_list<int>{(std::cout << t << "", 0)...};
+  std::cout << "\n";
+}
 
-    Garbage_Collector(){
-        std::cout<<"constructor Collector\n";
-    }
+struct Node;
+struct Traceable;
+struct ObjectHeader;
 
-    static void GC(){
-        Collector._AllObject.DeleteGarbage();
-    }
+static std::map<Traceable *, ObjectHeader *> traceInfo;
 
-    static void PrintAll(){
-        if (Collector._AllObject.size() == 0){
-            std::cout<<"Vector empty\n";
-        }
-        for (int i = 0; i < Collector._AllObject.size(); i++){
-            std::cout<<Collector._AllObject[i].Referense<<"\n";
-        }
-    }
+struct ObjectHeader{
+  bool marked;
+  size_t size;
+  static void *operator new(size_t size) {
+    void *object = malloc(size);
+    return object;
+  }
 };
 
-void* operator new(size_t size){
-    std::cout<<"operator new "<<size<<"\n";
-    void* referense = malloc(size);
-    if (!referense){
-        throw std::bad_alloc();
+template <typename T>
+void printVector(std::vector<T> const &input) {
+  print("\n{");
+  for (int i = 0; i < input.size(); i++) {
+    print("  ", input.at(i), ", ");
+  }
+  print("}\n");
+}
+
+struct Traceable {
+  ObjectHeader *getHeader() { return traceInfo.at(this); }
+
+  static void *operator new(size_t size) {
+    void *object = malloc(size);
+
+    auto header = new ObjectHeader{.marked = false, .size = size};
+    traceInfo.insert(std::make_pair((Traceable *)object, header));
+
+    return object;
+  }
+};
+
+struct Node : public Traceable {
+  char name;
+
+  Node *left;
+  Node *right;
+};
+
+void dump(const char *label) {
+  print("\n------------------------------------------------");
+  print(label);
+
+  print("\n{");
+
+  for (const auto &it : traceInfo) {
+    auto node = reinterpret_cast<Node *>(it.first);
+
+    print("  [", node->name, "] ", it.first, ": {.marked = ", it.second->marked,
+          ", .size = ", it.second->size, "}, ");
+  }
+
+  print("}\n");
+}
+
+std::vector<Traceable *> getPointers(Traceable *object) {
+  auto p = (uint8_t *)object;
+  auto end = (p + object->getHeader()->size);
+  std::vector<Traceable *> result;
+  while (p < end) {
+    auto address = (Traceable *)*(uintptr_t *)p;
+    if (traceInfo.count(address) != 0) {
+      result.emplace_back(address);
     }
-    Garbage_Collector::AddElement(referense);
-    return referense;
+    p++;
+  }
+  return result;
 }
 
-void operator delete(void* referense){
-    std::cout<<"operator delete\n";
-    Garbage_Collector::DeleteElement(referense);
+intptr_t *__rbp;
+
+intptr_t *__rsp;
+
+intptr_t *__stackBegin;
+
+#define __READ_RBP() __asm__ volatile("movq %%rbp, %0" : "=r"(__rbp))
+#define __READ_RSP() __asm__ volatile("movq %%rsp, %0" : "=r"(__rsp))
+
+void gcInit() {
+  __READ_RBP();
+  __stackBegin = (intptr_t *)*__rbp;
 }
 
-void* operator new[](size_t size){
-    std::cout<<"operator new[] :"<<size<<"\n";
-    void* referense = malloc(size);
-    if (!referense){
-        throw std::bad_alloc();
+std::vector<Traceable *> getRoots() {
+  std::vector<Traceable *> result;
+  // auto R = new Node{.name = 'H'};//???
+  // gcInit();
+  jmp_buf jb;
+  setjmp(jb);
+
+  __READ_RSP();
+  auto rsp = (uint8_t *)__rsp;
+  auto top = (uint8_t *)__stackBegin;
+
+  while (rsp < top) {
+    auto address = (Traceable *)*(uintptr_t *)rsp;
+    if (traceInfo.count(address) != 0) {
+      result.emplace_back(address);
     }
-    Garbage_Collector::AddElement(referense);
-    return referense;
+    rsp++;
+  }
+
+  return result;
 }
 
-void operator delete[](void* ptr){
-    std::cout << "operator delete[] called\n";
-    Garbage_Collector::DeleteElement(ptr);
-    free(ptr);
+void mark() {
+  auto worklist = getRoots();
+
+  while (!worklist.empty()) {
+    auto o = worklist.back();
+    worklist.pop_back();
+    auto header = o->getHeader();
+
+    if (!header->marked) {
+      header->marked = true;
+      for (const auto &p : getPointers(o)) {
+        worklist.push_back(p);
+      }
+    }
+  }
 }
 
-// #define new new(__FILE__)
+void sweep() {
+  auto it = traceInfo.cbegin();
+  while (it != traceInfo.cend()) {
+    if (it->second->marked) {
+      it->second->marked = false;
+      ++it;
+    } else {
+      it = traceInfo.erase(it);
+      free(it->first);
+    }
+  }
+}
+
+void gc() {
+  mark();
+  dump("After mark:");
+
+  sweep();
+  dump("After sweep:");
+}
 
