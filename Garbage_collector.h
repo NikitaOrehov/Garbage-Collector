@@ -1,82 +1,29 @@
+#pragma once
 #include <iostream>
 #include <memory>
 #include <map>
+#include "Vector.h"
 #include <vector>
 #include <setjmp.h>
 
-template <typename... T>
-void print(const T &... t) {
-  (void)std::initializer_list<int>{(std::cout << t << "", 0)...};
-  std::cout << "\n";
-}
+Vector ObjectInfo;
 
-struct Node;
-struct Traceable;
-struct ObjectHeader;
-
-static std::map<Traceable *, ObjectHeader *> traceInfo;
-
-struct ObjectHeader{
-  bool marked;
-  size_t size;
-  static void *operator new(size_t size) {
-    void *object = malloc(size);
-    return object;
-  }
-};
-
-template <typename T>
-void printVector(std::vector<T> const &input) {
-  print("\n{");
-  for (int i = 0; i < input.size(); i++) {
-    print("  ", input.at(i), ", ");
-  }
-  print("}\n");
-}
-
-struct Traceable {
-  ObjectHeader *getHeader() { return traceInfo.at(this); }
-
-  static void *operator new(size_t size) {
+void *operator new(size_t size) {
     void *object = malloc(size);
 
-    auto header = new ObjectHeader{.marked = false, .size = size};
-    traceInfo.insert(std::make_pair((Traceable *)object, header));
+    Object header = Object{.Referense = object, .size = size, .IsAlive = 0};
+    ObjectInfo.push_back(header);
 
     return object;
-  }
-};
-
-struct Node : public Traceable {
-  char name;
-
-  Node *left;
-  Node *right;
-};
-
-void dump(const char *label) {
-  print("\n------------------------------------------------");
-  print(label);
-
-  print("\n{");
-
-  for (const auto &it : traceInfo) {
-    auto node = reinterpret_cast<Node *>(it.first);
-
-    print("  [", node->name, "] ", it.first, ": {.marked = ", it.second->marked,
-          ", .size = ", it.second->size, "}, ");
-  }
-
-  print("}\n");
 }
 
-std::vector<Traceable *> getPointers(Traceable *object) {
-  auto p = (uint8_t *)object;
-  auto end = (p + object->getHeader()->size);
-  std::vector<Traceable *> result;
+std::vector<void *> getPointers(Object *object) {
+  auto p = (uint8_t *)object->Referense;
+  auto end = (p + object->size);
+  std::vector<void *> result;
   while (p < end) {
-    auto address = (Traceable *)*(uintptr_t *)p;
-    if (traceInfo.count(address) != 0) {
+    auto address = (void *)*(uintptr_t *)p;
+    if (ObjectInfo.FindReferense(address) != 0) {
       result.emplace_back(address);
     }
     p++;
@@ -98,8 +45,8 @@ void gcInit() {
   __stackBegin = (intptr_t *)*__rbp;
 }
 
-std::vector<Traceable *> getRoots() {
-  std::vector<Traceable *> result;
+std::vector<void *> getRoots() {
+  std::vector<void *> result;
   // auto R = new Node{.name = 'H'};//???
   // gcInit();
   jmp_buf jb;
@@ -110,8 +57,8 @@ std::vector<Traceable *> getRoots() {
   auto top = (uint8_t *)__stackBegin;
 
   while (rsp < top) {
-    auto address = (Traceable *)*(uintptr_t *)rsp;
-    if (traceInfo.count(address) != 0) {
+    auto address = (void *)*(uintptr_t *)rsp;
+    if (ObjectInfo.FindReferense(address) != 0) {
       result.emplace_back(address);
     }
     rsp++;
@@ -121,16 +68,14 @@ std::vector<Traceable *> getRoots() {
 }
 
 void mark() {
-  auto worklist = getRoots();
-
+  std::vector<void*> worklist = getRoots();//4 объекта создаст
   while (!worklist.empty()) {
-    auto o = worklist.back();
+    void* o = worklist.back();
     worklist.pop_back();
-    auto header = o->getHeader();
-
-    if (!header->marked) {
-      header->marked = true;
-      for (const auto &p : getPointers(o)) {
+    Object* object = ObjectInfo.FindObject(o);
+    if (!object->IsAlive) {
+      object->IsAlive = true;
+      for (const auto &p : getPointers(object)) {
         worklist.push_back(p);
       }
     }
@@ -138,23 +83,22 @@ void mark() {
 }
 
 void sweep() {
-  auto it = traceInfo.cbegin();
-  while (it != traceInfo.cend()) {
-    if (it->second->marked) {
-      it->second->marked = false;
-      ++it;
-    } else {
-      it = traceInfo.erase(it);
-      free(it->first);
+  for (int i = 0; i < ObjectInfo.size(); i++){
+    if (ObjectInfo[i]->IsAlive == true){
+      ObjectInfo[i]->IsAlive == false;
+    }
+    else{
+      ObjectInfo.DeleteElem(i);
     }
   }
 }
 
 void gc() {
   mark();
-  dump("After mark:");
-
+  std::cout<<"after mark -----------------------\n";
+  ObjectInfo.PrintObject();
+  std::cout<<"after sweep -----------------------\n";
   sweep();
-  dump("After sweep:");
+  ObjectInfo.PrintObject();
 }
 
