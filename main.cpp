@@ -3,20 +3,17 @@
 #include "Garbage_collector.h"
 
 class A{
-public:
+public: 
     int* a;
     A(){
         a = new int;
     }
 };
 
-int main() {
+int main(int argc,  char* argv[]) {
     gcInit();
     A* bb = new A;
     int* aa = new int;
-    std::vector<int> ccc;
-    ccc.push_back(1);
-    ccc.push_back(1);
     std::cout<<"---------------------\n";
     ObjectInfo.PrintObject();
     bb->a = nullptr;
