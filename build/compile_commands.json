@@ -1,7 +1,7 @@
 [
 {
   "directory": "C:/Users/User/Project/Garbage-Collector/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  -O0 -g -o CMakeFiles\\main.dir\\main.cpp.obj -c C:\\Users\\User\\Project\\Garbage-Collector\\main.cpp",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -g -o CMakeFiles\\main.dir\\main.cpp.obj -c C:\\Users\\User\\Project\\Garbage-Collector\\main.cpp",
   "file": "C:\\Users\\User\\Project\\Garbage-Collector\\main.cpp",
   "output": "CMakeFiles\\main.dir\\main.cpp.obj"
 }

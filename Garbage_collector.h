@@ -28,7 +28,7 @@ void *operator new[](size_t size) {
     return object;
 }
 
-void operator delete(void* ref){
+void operator delete(void* ref, size_t sz){
     std::cout<<"operator delete "<<ref<<"\n";
     ObjectInfo.DeleteElem(ref);
 }
