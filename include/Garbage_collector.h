@@ -39,22 +39,16 @@ void operator delete[](void* ref){
 }
 
 std::vector<void *> getPointers(Object *object) {
-  // std::cout<<"referense:  "<<object->Referense<<"  size:  "<<object->size<<"\n";
   auto p = (uint8_t *)object->Referense;
   auto end = (p + object->size);
   std::vector<void *> result;
   while (p < end) {
     auto address = (void *)*(uintptr_t *)p;
-    if (ObjectInfo.FindReferense(address) != 0) {
+    if (ObjectInfo.FindReferense(address)) {
       result.emplace_back(address);
     }
     p++;
   }
-  
-  // for (int i = 0; i < result.size(); i++){
-  //     // std::cout<<"getPointer ref: "<<result[i]<<"\n";
-  // }
-  // std::cout<<"end getPointer\n";
   return result;
 }
 
@@ -84,7 +78,7 @@ std::vector<void *> getRoots() {
   std::vector<void *> result;
   while (rsp < top) {
     auto address = (void *)*(uintptr_t *)rsp;
-    if (ObjectInfo.FindReferense(address) != 0) {
+    if (ObjectInfo.FindReferense(address)) {
       bool status = false;
       for (int i = 0; i < result.size(); i++){
         if (result[i] == address){
@@ -104,8 +98,8 @@ std::vector<void *> getRoots() {
 
 void mark() {
   std::vector<void*> worklist = getRoots();
-  for (int i = 0; i < worklist.size(); i++){
-      if (ObjectInfo.FindReferense(worklist[i]) == 0){
+  for (int i = 0; i < worklist.size(); i++){//исправляет ошибку, но замедляет.
+      if (!ObjectInfo.FindReferense(worklist[i])){
           worklist[i] = nullptr;
       }
   }
@@ -116,10 +110,9 @@ void mark() {
   }
   std::cout<<"end worklist---------------------\n";
   while (!worklist.empty()) {
-    void* o = worklist.back();
+    void* address = worklist.back();
     worklist.pop_back();
-    Object* object = ObjectInfo.FindObject(o);
-    bool b = object->IsAlive;
+    Object* object = ObjectInfo.FindObject(address);
     if (!object->IsAlive) {
       object->IsAlive = true;
       for (const auto &p :  getPointers(object)) {

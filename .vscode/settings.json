@@ -46,5 +46,6 @@
         "istream": "cpp",
         "map": "cpp",
         "cstring": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/home/kinro/project/Garbage-Collector/src"
 }

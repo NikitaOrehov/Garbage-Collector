@@ -1,8 +1,14 @@
 [
 {
-  "directory": "C:/Users/User/Project/Garbage-Collector/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -g -o CMakeFiles\\main.dir\\main.cpp.obj -c C:\\Users\\User\\Project\\Garbage-Collector\\main.cpp",
-  "file": "C:\\Users\\User\\Project\\Garbage-Collector\\main.cpp",
-  "output": "CMakeFiles\\main.dir\\main.cpp.obj"
+  "directory": "/home/kinro/project/Garbage-Collector/build",
+  "command": "/usr/bin/c++ -I/home/kinro/project/Garbage-Collector/src/../include -g -o CMakeFiles/main.dir/main.cpp.o -c /home/kinro/project/Garbage-Collector/src/main.cpp",
+  "file": "/home/kinro/project/Garbage-Collector/src/main.cpp",
+  "output": "CMakeFiles/main.dir/main.cpp.o"
+},
+{
+  "directory": "/home/kinro/project/Garbage-Collector/build",
+  "command": "/usr/bin/c++ -I/home/kinro/project/Garbage-Collector/src/../include -g -o CMakeFiles/main.dir/Vector.cpp.o -c /home/kinro/project/Garbage-Collector/src/Vector.cpp",
+  "file": "/home/kinro/project/Garbage-Collector/src/Vector.cpp",
+  "output": "CMakeFiles/main.dir/Vector.cpp.o"
 }
 ]
