@@ -18,6 +18,6 @@ int main(int argc,  char* argv[]) {
     ObjectInfo.PrintObject();
     bb->a = nullptr;
     std::cout<<"---------------------\n";
-    gc();
+    std::cout<<gc()<<"\n";
     return 0;
 }

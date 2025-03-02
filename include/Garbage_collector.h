@@ -10,7 +10,7 @@ Vector ObjectInfo;
 
 void *operator new(size_t size) {
     void *object = malloc(size);
-    std::cout<<"operator new "<<object<<"\n";
+    //std::cout<<"operator new "<<object<<"\n";
 
     Object header = Object{.Referense = object,  .size = size,  .IsAlive = 0};
     ObjectInfo.push_back(header);
@@ -20,7 +20,7 @@ void *operator new(size_t size) {
 
 void *operator new[](size_t size) {
     void *object = malloc(size);
-    std::cout<<"operator new[]"<<object<<"\n";
+    //std::cout<<"operator new[]"<<object<<"\n";
 
     Object header = Object{.Referense = object,  .size = size,  .IsAlive = 0};
     ObjectInfo.push_back(header);
@@ -29,12 +29,12 @@ void *operator new[](size_t size) {
 }
 
 void operator delete(void* ref, size_t sz){
-    std::cout<<"operator delete "<<ref<<"\n";
+    // std::cout<<"operator delete "<<ref<<"\n";
     ObjectInfo.DeleteElem(ref);
 }
 
 void operator delete[](void* ref){
-    std::cout<<"operator delete[]" <<ref<<"\n";
+    // std::cout<<"operator delete[]" <<ref<<"\n";
     ObjectInfo.DeleteElem(ref);
 }
 
@@ -103,12 +103,12 @@ void mark() {
           worklist[i] = nullptr;
       }
   }
-  std::cout<<"start worklist---------------------\n";
-  std::cout<<"size:  "<<worklist.size()<<"\n";
-  for (int i = 0; i < worklist.size(); i++){
-    std::cout<<worklist[i]<<"\n";
-  }
-  std::cout<<"end worklist---------------------\n";
+  // std::cout<<"start worklist---------------------\n";
+  // std::cout<<"size:  "<<worklist.size()<<"\n";
+  // for (int i = 0; i < worklist.size(); i++){
+  //   std::cout<<worklist[i]<<"\n";
+  // }
+  // std::cout<<"end worklist---------------------\n";
   while (!worklist.empty()) {
     void* address = worklist.back();
     worklist.pop_back();
@@ -122,22 +122,21 @@ void mark() {
   }
 }
 
-void sweep() {
+int sweep() {
+  int count = 0;
   for (int i = 0; i < ObjectInfo.size(); i++){
     if (ObjectInfo[i]->IsAlive == true){
       ObjectInfo[i]->IsAlive = false;
+      count += ObjectInfo[i]->size;
     }
     else{
       ObjectInfo.DeleteElem(i);
     }
   }
+  return count;
 }
 
-void gc() {
+int gc() {
   mark();
-  std::cout<<"after mark -----------------------\n";
-  ObjectInfo.PrintObject();
-  std::cout<<"after sweep -----------------------\n";
-  sweep();
-  ObjectInfo.PrintObject();
+  return sweep();
 }

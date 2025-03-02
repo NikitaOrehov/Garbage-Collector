@@ -587,7 +587,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/kinro/project/Garbage-Collector/src"
+			"value" : "/home/kinro/project/Garbage-Collector"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -751,7 +751,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "1"
+			"value" : "3"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -831,7 +831,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "scr"
+			"value" : "Garbage-Collector"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1130,6 +1130,42 @@
 			"value" : "FALSE"
 		},
 		{
+			"name" : "Garbage-Collector_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/kinro/project/Garbage-Collector/build"
+		},
+		{
+			"name" : "Garbage-Collector_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "Garbage-Collector_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/kinro/project/Garbage-Collector"
+		},
+		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",
 			"properties" : 
 			[
@@ -1151,7 +1187,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/kinro/project/Garbage-Collector/build"
+			"value" : "/home/kinro/project/Garbage-Collector/build/src"
 		},
 		{
 			"name" : "scr_IS_TOP_LEVEL",
@@ -1163,7 +1199,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "ON"
+			"value" : "OFF"
 		},
 		{
 			"name" : "scr_SOURCE_DIR",
@@ -1176,6 +1212,42 @@
 			],
 			"type" : "STATIC",
 			"value" : "/home/kinro/project/Garbage-Collector/src"
+		},
+		{
+			"name" : "test_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/kinro/project/Garbage-Collector/build/test"
+		},
+		{
+			"name" : "test_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "OFF"
+		},
+		{
+			"name" : "test_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/kinro/project/Garbage-Collector/test"
 		}
 	],
 	"kind" : "cache",

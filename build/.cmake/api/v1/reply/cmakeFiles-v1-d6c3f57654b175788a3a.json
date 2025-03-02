@@ -6,7 +6,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "/home/kinro/project/Garbage-Collector/build/CMakeFiles/3.30.3/CMakeSystem.cmake"
+			"path" : "build/CMakeFiles/3.30.3/CMakeSystem.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -20,11 +20,11 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "/home/kinro/project/Garbage-Collector/build/CMakeFiles/3.30.3/CMakeCCompiler.cmake"
+			"path" : "build/CMakeFiles/3.30.3/CMakeCCompiler.cmake"
 		},
 		{
 			"isGenerated" : true,
-			"path" : "/home/kinro/project/Garbage-Collector/build/CMakeFiles/3.30.3/CMakeCXXCompiler.cmake"
+			"path" : "build/CMakeFiles/3.30.3/CMakeCXXCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -125,13 +125,19 @@
 			"isCMake" : true,
 			"isExternal" : true,
 			"path" : "/usr/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"path" : "src/CMakeLists.txt"
+		},
+		{
+			"path" : "test/CMakeLists.txt"
 		}
 	],
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
 		"build" : "/home/kinro/project/Garbage-Collector/build",
-		"source" : "/home/kinro/project/Garbage-Collector/src"
+		"source" : "/home/kinro/project/Garbage-Collector"
 	},
 	"version" : 
 	{

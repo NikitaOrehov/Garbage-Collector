@@ -21,7 +21,6 @@ void Vector::expansion(){
 }
 
 Vector::Vector(size_t max_size) :  _max_size(max_size){
-    std::cout<<"constructor Vector\n";
     _size = 0;
     _real_size = 0;
     _array = (Object**)malloc(sizeof(Object*) * _max_size);
@@ -46,7 +45,7 @@ void Vector::push_back(Object object){
 }
 
 void Vector::DeleteElem(int index){
-    std::cout<<"delete elem\n";
+    // std::cout<<"delete elem\n";
     void* j = _array[index]->Referense;
     free(_array[index]->Referense);
     _array[index]->Referense = nullptr;
@@ -60,7 +59,7 @@ void Vector::DeleteElem(int index){
 }
 
 void Vector::DeleteElem(void* ref){
-    std::cout<<"delete elem\n";
+    // std::cout<<"delete elem\n";
     for (int i = 0; i < _size; i++){
         if (ref == _array[i]->Referense){
             free(_array[i]->Referense);
@@ -112,10 +111,8 @@ void Vector::PrintObject(){
 }
 
 Vector::~Vector(){
-    std::cout<<"destructor Vector\n";
     for (int i = 0; i < _size; i++){
         free(_array[i]);
     }
     free(_array);
-    std::cout<<"end destructor Vector\n";
 }

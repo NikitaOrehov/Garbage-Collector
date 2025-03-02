@@ -1,14 +1,26 @@
 [
 {
   "directory": "/home/kinro/project/Garbage-Collector/build",
-  "command": "/usr/bin/c++ -I/home/kinro/project/Garbage-Collector/src/../include -g -o CMakeFiles/main.dir/main.cpp.o -c /home/kinro/project/Garbage-Collector/src/main.cpp",
-  "file": "/home/kinro/project/Garbage-Collector/src/main.cpp",
-  "output": "CMakeFiles/main.dir/main.cpp.o"
+  "command": "/usr/bin/c++ -I/home/kinro/project/Garbage-Collector/src/../include -g -o src/CMakeFiles/vector.dir/Vector.cpp.o -c /home/kinro/project/Garbage-Collector/src/Vector.cpp",
+  "file": "/home/kinro/project/Garbage-Collector/src/Vector.cpp",
+  "output": "src/CMakeFiles/vector.dir/Vector.cpp.o"
 },
 {
   "directory": "/home/kinro/project/Garbage-Collector/build",
-  "command": "/usr/bin/c++ -I/home/kinro/project/Garbage-Collector/src/../include -g -o CMakeFiles/main.dir/Vector.cpp.o -c /home/kinro/project/Garbage-Collector/src/Vector.cpp",
+  "command": "/usr/bin/c++ -I/home/kinro/project/Garbage-Collector/src/../include -g -o src/CMakeFiles/main.dir/main.cpp.o -c /home/kinro/project/Garbage-Collector/src/main.cpp",
+  "file": "/home/kinro/project/Garbage-Collector/src/main.cpp",
+  "output": "src/CMakeFiles/main.dir/main.cpp.o"
+},
+{
+  "directory": "/home/kinro/project/Garbage-Collector/build",
+  "command": "/usr/bin/c++ -I/home/kinro/project/Garbage-Collector/src/../include -g -o src/CMakeFiles/main.dir/Vector.cpp.o -c /home/kinro/project/Garbage-Collector/src/Vector.cpp",
   "file": "/home/kinro/project/Garbage-Collector/src/Vector.cpp",
-  "output": "CMakeFiles/main.dir/Vector.cpp.o"
+  "output": "src/CMakeFiles/main.dir/Vector.cpp.o"
+},
+{
+  "directory": "/home/kinro/project/Garbage-Collector/build",
+  "command": "/usr/bin/c++ -I/home/kinro/project/Garbage-Collector/test/../include -g -o test/CMakeFiles/testing.dir/test.cpp.o -c /home/kinro/project/Garbage-Collector/test/test.cpp",
+  "file": "/home/kinro/project/Garbage-Collector/test/test.cpp",
+  "output": "test/CMakeFiles/testing.dir/test.cpp.o"
 }
 ]

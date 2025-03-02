@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: scr
+# Project: Garbage-Collector
 # Configurations: Debug
 # =============================================================================
 
@@ -40,45 +40,6 @@ include CMakeFiles/rules.ninja
 # Logical path to working directory; prefix for absolute paths.
 
 cmake_ninja_workdir = /home/kinro/project/Garbage-Collector/build/
-# =============================================================================
-# Object build statements for EXECUTABLE target main
-
-
-#############################################
-# Order-only phony target for main
-
-build cmake_object_order_depends_target_main: phony || .
-
-build CMakeFiles/main.dir/main.cpp.o: CXX_COMPILER__main_unscanned_Debug /home/kinro/project/Garbage-Collector/src/main.cpp || cmake_object_order_depends_target_main
-  DEP_FILE = CMakeFiles/main.dir/main.cpp.o.d
-  FLAGS = -g
-  INCLUDES = -I/home/kinro/project/Garbage-Collector/src/../include
-  OBJECT_DIR = CMakeFiles/main.dir
-  OBJECT_FILE_DIR = CMakeFiles/main.dir
-
-build CMakeFiles/main.dir/Vector.cpp.o: CXX_COMPILER__main_unscanned_Debug /home/kinro/project/Garbage-Collector/src/Vector.cpp || cmake_object_order_depends_target_main
-  DEP_FILE = CMakeFiles/main.dir/Vector.cpp.o.d
-  FLAGS = -g
-  INCLUDES = -I/home/kinro/project/Garbage-Collector/src/../include
-  OBJECT_DIR = CMakeFiles/main.dir
-  OBJECT_FILE_DIR = CMakeFiles/main.dir
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target main
-
-
-#############################################
-# Link the executable main
-
-build main: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/main.cpp.o CMakeFiles/main.dir/Vector.cpp.o
-  FLAGS = -g
-  OBJECT_DIR = CMakeFiles/main.dir
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_FILE = main
-  TARGET_PDB = main.dbg
-
 
 #############################################
 # Utility command for edit_cache
@@ -95,7 +56,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/kinro/project/Garbage-Collector/build && /usr/bin/cmake --regenerate-during-build -S/home/kinro/project/Garbage-Collector/src -B/home/kinro/project/Garbage-Collector/build
+  COMMAND = cd /home/kinro/project/Garbage-Collector/build && /usr/bin/cmake --regenerate-during-build -S/home/kinro/project/Garbage-Collector -B/home/kinro/project/Garbage-Collector/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -103,7 +64,175 @@ build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/kinro/project/Garbage-Collector/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target vector
+
+
+#############################################
+# Order-only phony target for vector
+
+build cmake_object_order_depends_target_vector: phony || .
+
+build src/CMakeFiles/vector.dir/Vector.cpp.o: CXX_COMPILER__vector_unscanned_Debug /home/kinro/project/Garbage-Collector/src/Vector.cpp || cmake_object_order_depends_target_vector
+  DEP_FILE = src/CMakeFiles/vector.dir/Vector.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -I/home/kinro/project/Garbage-Collector/src/../include
+  OBJECT_DIR = src/CMakeFiles/vector.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/vector.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target vector
+
+
+#############################################
+# Link the static library src/libvector.a
+
+build src/libvector.a: CXX_STATIC_LIBRARY_LINKER__vector_Debug src/CMakeFiles/vector.dir/Vector.cpp.o
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = src/CMakeFiles/vector.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = src/libvector.a
+  TARGET_PDB = vector.a.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target main
+
+
+#############################################
+# Order-only phony target for main
+
+build cmake_object_order_depends_target_main: phony || .
+
+build src/CMakeFiles/main.dir/main.cpp.o: CXX_COMPILER__main_unscanned_Debug /home/kinro/project/Garbage-Collector/src/main.cpp || cmake_object_order_depends_target_main
+  DEP_FILE = src/CMakeFiles/main.dir/main.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -I/home/kinro/project/Garbage-Collector/src/../include
+  OBJECT_DIR = src/CMakeFiles/main.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/main.dir
+
+build src/CMakeFiles/main.dir/Vector.cpp.o: CXX_COMPILER__main_unscanned_Debug /home/kinro/project/Garbage-Collector/src/Vector.cpp || cmake_object_order_depends_target_main
+  DEP_FILE = src/CMakeFiles/main.dir/Vector.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -I/home/kinro/project/Garbage-Collector/src/../include
+  OBJECT_DIR = src/CMakeFiles/main.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/main.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target main
+
+
+#############################################
+# Link the executable src/main
+
+build src/main: CXX_EXECUTABLE_LINKER__main_Debug src/CMakeFiles/main.dir/main.cpp.o src/CMakeFiles/main.dir/Vector.cpp.o
+  FLAGS = -g
+  OBJECT_DIR = src/CMakeFiles/main.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = src/main
+  TARGET_PDB = main.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build src/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/kinro/project/Garbage-Collector/build/src && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build src/edit_cache: phony src/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build src/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/kinro/project/Garbage-Collector/build/src && /usr/bin/cmake --regenerate-during-build -S/home/kinro/project/Garbage-Collector -B/home/kinro/project/Garbage-Collector/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build src/rebuild_cache: phony src/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/kinro/project/Garbage-Collector/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target testing
+
+
+#############################################
+# Order-only phony target for testing
+
+build cmake_object_order_depends_target_testing: phony || cmake_object_order_depends_target_vector
+
+build test/CMakeFiles/testing.dir/test.cpp.o: CXX_COMPILER__testing_unscanned_Debug /home/kinro/project/Garbage-Collector/test/test.cpp || cmake_object_order_depends_target_testing
+  DEP_FILE = test/CMakeFiles/testing.dir/test.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -I/home/kinro/project/Garbage-Collector/test/../include
+  OBJECT_DIR = test/CMakeFiles/testing.dir
+  OBJECT_FILE_DIR = test/CMakeFiles/testing.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target testing
+
+
+#############################################
+# Link the executable test/testing
+
+build test/testing: CXX_EXECUTABLE_LINKER__testing_Debug test/CMakeFiles/testing.dir/test.cpp.o | src/libvector.a || src/libvector.a
+  FLAGS = -g
+  LINK_LIBRARIES = src/libvector.a
+  OBJECT_DIR = test/CMakeFiles/testing.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = test/testing
+  TARGET_PDB = testing.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build test/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/kinro/project/Garbage-Collector/build/test && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build test/edit_cache: phony test/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build test/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/kinro/project/Garbage-Collector/build/test && /usr/bin/cmake --regenerate-during-build -S/home/kinro/project/Garbage-Collector -B/home/kinro/project/Garbage-Collector/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build test/rebuild_cache: phony test/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
 # Target aliases.
+
+build libvector.a: phony src/libvector.a
+
+build main: phony src/main
+
+build testing: phony test/testing
+
+build vector: phony src/libvector.a
 
 # =============================================================================
 # Folder targets.
@@ -113,7 +242,21 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /home/kinro/project/Garbage-Collector/build
 
-build all: phony main
+build all: phony src/all test/all
+
+# =============================================================================
+
+#############################################
+# Folder: /home/kinro/project/Garbage-Collector/build/src
+
+build src/all: phony src/libvector.a src/main
+
+# =============================================================================
+
+#############################################
+# Folder: /home/kinro/project/Garbage-Collector/build/test
+
+build test/all: phony test/testing
 
 # =============================================================================
 # Built-in targets
@@ -122,14 +265,14 @@ build all: phony main
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/kinro/project/Garbage-Collector/src/CMakeLists.txt /usr/share/cmake-3.30/Modules/CMakeCInformation.cmake /usr/share/cmake-3.30/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.30/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.30/Modules/Platform/Linux.cmake /usr/share/cmake-3.30/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.3/CMakeCCompiler.cmake CMakeFiles/3.30.3/CMakeCXXCompiler.cmake CMakeFiles/3.30.3/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/kinro/project/Garbage-Collector/CMakeLists.txt /home/kinro/project/Garbage-Collector/src/CMakeLists.txt /home/kinro/project/Garbage-Collector/test/CMakeLists.txt /usr/share/cmake-3.30/Modules/CMakeCInformation.cmake /usr/share/cmake-3.30/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.30/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.30/Modules/Platform/Linux.cmake /usr/share/cmake-3.30/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.3/CMakeCCompiler.cmake CMakeFiles/3.30.3/CMakeCXXCompiler.cmake CMakeFiles/3.30.3/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/kinro/project/Garbage-Collector/src/CMakeLists.txt /usr/share/cmake-3.30/Modules/CMakeCInformation.cmake /usr/share/cmake-3.30/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.30/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.30/Modules/Platform/Linux.cmake /usr/share/cmake-3.30/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.3/CMakeCCompiler.cmake CMakeFiles/3.30.3/CMakeCXXCompiler.cmake CMakeFiles/3.30.3/CMakeSystem.cmake: phony
+build /home/kinro/project/Garbage-Collector/CMakeLists.txt /home/kinro/project/Garbage-Collector/src/CMakeLists.txt /home/kinro/project/Garbage-Collector/test/CMakeLists.txt /usr/share/cmake-3.30/Modules/CMakeCInformation.cmake /usr/share/cmake-3.30/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.30/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.30/Modules/Compiler/GNU.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.30/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.30/Modules/Platform/Linux.cmake /usr/share/cmake-3.30/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.3/CMakeCCompiler.cmake CMakeFiles/3.30.3/CMakeCXXCompiler.cmake CMakeFiles/3.30.3/CMakeSystem.cmake: phony
 
 
 #############################################
