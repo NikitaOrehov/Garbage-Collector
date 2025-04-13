@@ -5,4 +5,3 @@ include_directories(../include)
 project(test)
 
 add_executable(testing test.cpp)
-target_link_libraries(testing vector)

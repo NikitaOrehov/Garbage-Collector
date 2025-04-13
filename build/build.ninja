@@ -69,38 +69,6 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 
 # =============================================================================
-# Object build statements for STATIC_LIBRARY target vector
-
-
-#############################################
-# Order-only phony target for vector
-
-build cmake_object_order_depends_target_vector: phony || .
-
-build src/CMakeFiles/vector.dir/Vector.cpp.o: CXX_COMPILER__vector_unscanned_Debug /home/kinro/project/Garbage-Collector/src/Vector.cpp || cmake_object_order_depends_target_vector
-  DEP_FILE = src/CMakeFiles/vector.dir/Vector.cpp.o.d
-  FLAGS = -g
-  INCLUDES = -I/home/kinro/project/Garbage-Collector/src/../include
-  OBJECT_DIR = src/CMakeFiles/vector.dir
-  OBJECT_FILE_DIR = src/CMakeFiles/vector.dir
-
-
-# =============================================================================
-# Link build statements for STATIC_LIBRARY target vector
-
-
-#############################################
-# Link the static library src/libvector.a
-
-build src/libvector.a: CXX_STATIC_LIBRARY_LINKER__vector_Debug src/CMakeFiles/vector.dir/Vector.cpp.o
-  LANGUAGE_COMPILE_FLAGS = -g
-  OBJECT_DIR = src/CMakeFiles/vector.dir
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_FILE = src/libvector.a
-  TARGET_PDB = vector.a.dbg
-
-# =============================================================================
 # Object build statements for EXECUTABLE target main
 
 
@@ -116,13 +84,6 @@ build src/CMakeFiles/main.dir/main.cpp.o: CXX_COMPILER__main_unscanned_Debug /ho
   OBJECT_DIR = src/CMakeFiles/main.dir
   OBJECT_FILE_DIR = src/CMakeFiles/main.dir
 
-build src/CMakeFiles/main.dir/Vector.cpp.o: CXX_COMPILER__main_unscanned_Debug /home/kinro/project/Garbage-Collector/src/Vector.cpp || cmake_object_order_depends_target_main
-  DEP_FILE = src/CMakeFiles/main.dir/Vector.cpp.o.d
-  FLAGS = -g
-  INCLUDES = -I/home/kinro/project/Garbage-Collector/src/../include
-  OBJECT_DIR = src/CMakeFiles/main.dir
-  OBJECT_FILE_DIR = src/CMakeFiles/main.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target main
@@ -131,7 +92,7 @@ build src/CMakeFiles/main.dir/Vector.cpp.o: CXX_COMPILER__main_unscanned_Debug /
 #############################################
 # Link the executable src/main
 
-build src/main: CXX_EXECUTABLE_LINKER__main_Debug src/CMakeFiles/main.dir/main.cpp.o src/CMakeFiles/main.dir/Vector.cpp.o
+build src/main: CXX_EXECUTABLE_LINKER__main_Debug src/CMakeFiles/main.dir/main.cpp.o
   FLAGS = -g
   OBJECT_DIR = src/CMakeFiles/main.dir
   POST_BUILD = :
@@ -174,7 +135,7 @@ build src/rebuild_cache: phony src/CMakeFiles/rebuild_cache.util
 #############################################
 # Order-only phony target for testing
 
-build cmake_object_order_depends_target_testing: phony || cmake_object_order_depends_target_vector
+build cmake_object_order_depends_target_testing: phony || .
 
 build test/CMakeFiles/testing.dir/test.cpp.o: CXX_COMPILER__testing_unscanned_Debug /home/kinro/project/Garbage-Collector/test/test.cpp || cmake_object_order_depends_target_testing
   DEP_FILE = test/CMakeFiles/testing.dir/test.cpp.o.d
@@ -191,9 +152,8 @@ build test/CMakeFiles/testing.dir/test.cpp.o: CXX_COMPILER__testing_unscanned_De
 #############################################
 # Link the executable test/testing
 
-build test/testing: CXX_EXECUTABLE_LINKER__testing_Debug test/CMakeFiles/testing.dir/test.cpp.o | src/libvector.a || src/libvector.a
+build test/testing: CXX_EXECUTABLE_LINKER__testing_Debug test/CMakeFiles/testing.dir/test.cpp.o
   FLAGS = -g
-  LINK_LIBRARIES = src/libvector.a
   OBJECT_DIR = test/CMakeFiles/testing.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -226,13 +186,9 @@ build test/rebuild_cache: phony test/CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build libvector.a: phony src/libvector.a
-
 build main: phony src/main
 
 build testing: phony test/testing
-
-build vector: phony src/libvector.a
 
 # =============================================================================
 # Folder targets.
@@ -249,7 +205,7 @@ build all: phony src/all test/all
 #############################################
 # Folder: /home/kinro/project/Garbage-Collector/build/src
 
-build src/all: phony src/libvector.a src/main
+build src/all: phony src/main
 
 # =============================================================================
 

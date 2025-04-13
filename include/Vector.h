@@ -2,30 +2,43 @@
 #include <cstring>
 #include <iostream>
 
-struct Object
-{
-    void* Referense;
-    size_t size = 0;
-    bool IsAlive = 0;
-};
 
+
+template <class T>
 class Vector{
-    Object** _array;
+    T* _array;
     size_t _real_size;
     size_t _size;
-    size_t _max_size;
 
-    void expansion();
+    void expansion(){
+        T* tmp = (T*)malloc(sizeof(T) * _size * 2);
+        memcpy(tmp, _array, _size * sizeof(T));
+        free(_array);
+        _array = tmp;
+        _size *= 2;
+    }
 public: 
-    Vector(size_t max_size = 2);
-    size_t size() const ;
-    void push_back(Object object);
-    void DeleteElem(int index);
-    void DeleteElem(void* ref);
-    bool FindReferense(void* ref);
-    Object* FindObject(void* ref);
-    Object* operator[](int index);
-    void PrintObject();
-    ~Vector();
+    Vector(size_t size = 8) : _size(size), _real_size(0){
+        _array = (T*)malloc(sizeof(T) * _size);
+    }
 
-};//как пометить элементы при удалении и удалить их только во время расширения?
+    size_t size() const{ return _real_size;}
+
+    void push_back(T elem){
+        if (_real_size == _size) expansion();
+        _array[_real_size++] = elem;
+    }
+
+    T& back(){ return _array[_real_size - 1];}
+
+    void pop_back(){
+        if (_real_size == 0) return;
+        --_real_size;
+    }
+
+    bool empty(){ return _real_size == 0;}
+
+    T& operator[](int index) {return _array[index];}
+
+    ~Vector(){ free(_array);}
+};

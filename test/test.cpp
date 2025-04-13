@@ -8,14 +8,14 @@ public:
     int* a;
     int* b;
     A(size_t size = 10){
-        a = new int[size];
-        b = new int[size];
+        a = Mynew<int>(size);
+        b = Mynew<int>(size);
     }
 };
 
 void test0_1(){
-    int* a = new int[20];
-    int* b = new int[20];
+    int* a = Mynew<int>(20);
+    int* b = Mynew<int>(20);
 }
 
 void test1_1(){
@@ -23,8 +23,8 @@ void test1_1(){
 }
 
 void test2_1(){
-    int* a = new int[20];
-    int* b = new int[20];
+    int* a = Mynew<int>(20);
+    int* b = Mynew<int>(20);
     A c;
 }
 
@@ -51,19 +51,19 @@ void test1(){
     std::cout<<"test1: "<<gc()<<"\n";
 }
 
-void test2(){
+void test2(){//не хочет очищяться с первого раза
     test2_1();
     std::cout<<"test2: "<<gc()<<"\n";
 }
 
 void test3(){
-    A* a = new A;
-    delete a;
+    A* a = Mynew<A>();
+    Mydelete(a);
     std::cout<<"test3: "<<gc()<<"\n";
 }
 
-void test4(){
-    A* a = new A;
+void test4(){//?
+    A* a = Mynew<A>();
     a = nullptr;
     std::cout<<"test4: "<<gc()<<"\n";
 }
@@ -81,7 +81,7 @@ void test6(){
 
 void test7(size_t size){
     for (int i = 0; i < size; i++){
-        int* a = new int[20];
+        int* a = Mynew<int>(20);
     }
 }
 
@@ -95,7 +95,7 @@ int main(){
     test5();
     test6();
     test7(200);
-    int* aaa = new int;
+    int* aaa = Mynew<int>();
     *aaa = 5;
     std::cout<<"test7: "<<gc()<<"\n";
     return 0;

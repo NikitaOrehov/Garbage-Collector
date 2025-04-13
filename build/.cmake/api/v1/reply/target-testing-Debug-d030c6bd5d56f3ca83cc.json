@@ -11,7 +11,6 @@
 		"commands" : 
 		[
 			"add_executable",
-			"target_link_libraries",
 			"include_directories"
 		],
 		"files" : 
@@ -32,12 +31,6 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 8,
-				"parent" : 0
-			},
-			{
-				"command" : 2,
-				"file" : 0,
 				"line" : 3,
 				"parent" : 0
 			}
@@ -55,7 +48,7 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 3,
+					"backtrace" : 2,
 					"path" : "/home/kinro/project/Garbage-Collector/test/../include"
 				}
 			],
@@ -64,13 +57,6 @@
 			[
 				0
 			]
-		}
-	],
-	"dependencies" : 
-	[
-		{
-			"backtrace" : 2,
-			"id" : "vector::@145eef247bfb46b6828c"
 		}
 	],
 	"id" : "testing::@36f028580bb02cc8272a",
@@ -85,11 +71,6 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "src/libvector.a",
-				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
