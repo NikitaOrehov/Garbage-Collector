@@ -27,10 +27,14 @@ int main(int argc,  char* argv[]) {
     std::cout<<"point 2\n";
     Print();
     std::cout<<"point 3\n";
-    bb->a = nullptr;
+    delete bb;
+    bb = nullptr;
     std::cout<<"point 4\n";
     std::cout<<gc()<<"\n";
     std::cout<<"point 5\n";
+    Print();
+    *aa = 1;
+    std::cout<<"point "<<*aa + 5<<"\n";
     return 0;
 
 

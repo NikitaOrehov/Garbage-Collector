@@ -347,5 +347,7 @@ int sweep() {
 
 int gc() {
   mark();
+  std::cout<<"after mark\n";
+  Print();
   return sweep();
 }

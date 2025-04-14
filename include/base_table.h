@@ -46,9 +46,7 @@ struct ListIterator{
         return a._node==b._node;
     }
     friend bool operator!=(const ListIterator& a,const ListIterator& b){
-		std::cout<<"start test 2\n";
 		bool status = a._node != b._node;
-		std::cout<<"end test 2\n";
         return status;
     }
 
@@ -75,7 +73,7 @@ class List{
 		}
 		~record(){
 			std::cout<<"destructor record\n";
-			free(key);
+			// free(key);
 		}
 	};
 private:
@@ -88,9 +86,8 @@ public:
     }
     
     void push_back(void* key, Object data) {
-		record rec(key, data);
 		Node<record>* node = static_cast<Node<record>*>(malloc(sizeof(Node<record>)));
-		node->data = rec;
+		node->data = record(key, data);
 		node->next = nullptr;
         if (_head == nullptr){
             _head = node;
@@ -169,9 +166,14 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, List& f){
-        for (auto f: f){
-			std::cout<<"test 1\n";
-            std::cout<<f.key <<" " << f.data << " | ";
+        // for (auto f: f){
+		// 	std::cout<<"test 1\n";
+        //     std::cout<<f.key <<" " << f.data << " | ";
+        // }
+        Node<record>* tmp = f._head;
+        while (tmp != nullptr){
+            std::cout<<tmp->data.key <<" " << tmp->data.data << " | ";
+            tmp = tmp->next;
         }
 		return os;
     }
