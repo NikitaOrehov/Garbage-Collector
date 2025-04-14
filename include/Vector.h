@@ -40,5 +40,5 @@ public:
 
     T& operator[](int index) {return _array[index];}
 
-    ~Vector(){ free(_array);}
+    ~Vector(){free(_array);}
 };

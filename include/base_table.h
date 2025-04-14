@@ -14,25 +14,38 @@ struct Object
 		}
 	};
 
-template <class T>
-struct Node{
-    T data;
-    Node* next;
-	~Node(){
-		std::cout<<"destructor\n";
-	}
+struct record{
+    void* key;
+    Object* data;
+    record(void* k, Object* d){
+        key = k;
+        data = d;
+    }
+    record(const record& rec) = delete;
+    record operator=(const record& rec) = delete;
+    ~record(){
+        free(key);
+        free(data);
+    }
 };
 
-template <class T>
+struct Node{
+    record* data;
+    Node* next;
+    ~Node(){
+        data->~record(); 
+    }
+};
+
 struct ListIterator{
     using iterator_category = std::forward_iterator_tag;
     using difference_type = std::ptrdiff_t;
-    using value_type = T;
-    using pointer = T*;
-    using reference = T&;
-    ListIterator(Node<T>* node): _node(node){};
-    const reference operator*()const{return _node->data;}
-    const pointer operator->(){return &(_node->data);}
+    using value_type = record;
+    using pointer = record*;
+    using reference = record&;
+    ListIterator(Node* node): _node(node){};
+    const reference operator*()const{return *_node->data;}
+    const pointer operator->(){return _node->data;}
     ListIterator operator++(int){
         ListIterator tmp=*this;
         ++(*this);
@@ -51,43 +64,26 @@ struct ListIterator{
     }
 
 private:
-    Node<T>* _node;
+    Node* _node;
 };
 
 
 
-
 class List{
-	struct record{
-		void* key;
-		Object data;
-		record(void* k, Object d){
-			key = k;
-			data = d;
-			// data = (Object*)malloc(sizeof(Object));
-			// data->IsAlive = d.IsAlive;
-			// data->size = d.size;
-		}
-		record(const record& rec){
-			std::cout<<"constructor record copy\n";
-		}
-		~record(){
-			std::cout<<"destructor record\n";
-			// free(key);
-		}
-	};
 private:
-    Node<record>* _head;
-    Node<record>* _tail;
+    Node* _head;
+    Node* _tail;
 public:
     List(){
         _head = nullptr;
 		_tail = nullptr;
     }
     
-    void push_back(void* key, Object data) {
-		Node<record>* node = static_cast<Node<record>*>(malloc(sizeof(Node<record>)));
-		node->data = record(key, data);
+    void push_back(void* key, Object* data) {
+		Node* node = static_cast<Node*>(malloc(sizeof(Node)));
+        node->data = (record*)malloc(sizeof(record));
+        node->data->key = key;
+        node->data->data = data;
 		node->next = nullptr;
         if (_head == nullptr){
             _head = node;
@@ -100,11 +96,11 @@ public:
     }
 
 	void remove(void* value) {
-        Node<record>* current = _head;
-        Node<record>* previous = nullptr;
+        Node* current = _head;
+        Node* previous = nullptr;
 
         while (current) {
-            if (current->data.key == value) {
+            if (current->data->key == value) {
                 if (previous) {
                     previous->next = current->next;
                 } else {
@@ -123,23 +119,26 @@ public:
 
 	int sweep(){
 		int count = 0;
-		Node<record>* current = _head;
-		Node<record>* previous = nullptr;
+        int test = 0;
+		Node* current = _head;
+		Node* previous = nullptr;
 		while(current){
-			if (!current->data.data.IsAlive){
+			if (!current->data->data->IsAlive){
 				if (previous)previous->next = current->next;
 				else _head = current->next;
 				if (current == _tail){
 					_tail = previous;
-					free(current);
+                    current->~Node();
 					return count;
 				}
-				Node<record>* tmp = current;
+				Node* tmp = current;
 				current = current->next;
-				free(tmp);
+				tmp->~Node();
+                test++;
 				continue;
 			}
-			count += current->data.data.size;
+            current->data->data->IsAlive = 0;
+			count += current->data->data->size;
 			previous = current;
 			current = current->next;
 		}
@@ -149,7 +148,7 @@ public:
 	Object* contains(void* value){
 		for (auto it = begin(); it != end(); it++){
 			if (it->key == value){
-				return &(it->data);
+				return it->data;
 			}
 		}
 		return nullptr;
@@ -157,22 +156,18 @@ public:
 
 	bool empty() { return _head == nullptr;}
 
-    ListIterator<record> begin(){
-        return ListIterator<record>(_head);
+    ListIterator begin(){
+        return ListIterator(_head);
     }
 
-    ListIterator<record> end(){
-        return ListIterator<record>(nullptr);
+    ListIterator end(){
+        return ListIterator(nullptr);
     }
 
     friend std::ostream& operator<<(std::ostream& os, List& f){
-        // for (auto f: f){
-		// 	std::cout<<"test 1\n";
-        //     std::cout<<f.key <<" " << f.data << " | ";
-        // }
-        Node<record>* tmp = f._head;
+        Node* tmp = f._head;
         while (tmp != nullptr){
-            std::cout<<tmp->data.key <<" " << tmp->data.data << " | ";
+            std::cout<<tmp->data->key <<" " << *tmp->data->data << " | ";
             tmp = tmp->next;
         }
 		return os;
@@ -191,7 +186,7 @@ private:
 public:
 	HashMap() : table(1024){}
 	
-	void insert(void* key, Object data){
+	void insert(void* key, Object* data){
 		size_t index = hash(key);
 		table[index].push_back(key, data);
 	}
@@ -207,7 +202,7 @@ public:
 	}
 
 	int sweep(){
-		int count;
+		int count = 0;
 		for (int i = 0; i < size; i++){
 			count += table[i].sweep();
 		}
@@ -215,10 +210,11 @@ public:
 	}
 
 	friend std::ostream& operator<<(std::ostream& os, HashMap& h){
+        std::cout<<"\n";
         for (int i = 0; i < h.size; i++){
 			if (h.table[i].empty()) continue;
-			std::cout<<"count: "<<i<<"\n";
-			std::cout<<" | " << h.table[i] << " | ";
+			std::cout<<"count: "<<i<<" ";
+			std::cout<<" | " << h.table[i] << "\n";
 		}
 		return os;
     }
