@@ -37,7 +37,11 @@
     - если не живой, удаляем объект
 
 
-
+```rb
+# path/to/your/file.rb
+class MyClass
+end
+```
 
 
 
