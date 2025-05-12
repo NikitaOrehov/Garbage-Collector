@@ -36,11 +36,16 @@
     - если живой, помечаем как не живой
     - если не живой, удаляем объект
 
+## пример работы
 
 ```rb
-# path/to/your/file.rb
-class MyClass
-end
+int main(int argc,  char* argv[]) {
+    gcInit();
+    A* bb = new A;
+    int* aa = new int;
+    bb->a = nullptr;
+    gc();
+}
 ```
 
 
